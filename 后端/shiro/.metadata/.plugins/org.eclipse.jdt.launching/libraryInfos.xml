@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="C:\D\sotfInstal\java" version="1.8.0_161">
+<bootpath>
+<entry path="C:\D\sotfInstal\java\lib\resources.jar"/>
+<entry path="C:\D\sotfInstal\java\lib\rt.jar"/>
+<entry path="C:\D\sotfInstal\java\lib\sunrsasign.jar"/>
+<entry path="C:\D\sotfInstal\java\lib\jsse.jar"/>
+<entry path="C:\D\sotfInstal\java\lib\jce.jar"/>
+<entry path="C:\D\sotfInstal\java\lib\charsets.jar"/>
+<entry path="C:\D\sotfInstal\java\lib\jfr.jar"/>
+<entry path="C:\D\sotfInstal\java\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\D\sotfInstal\java\lib\ext"/>
+<entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\D\sotfInstal\java\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

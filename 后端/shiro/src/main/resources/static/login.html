@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>登录界面</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <!--下面用于引入bootStrap样式-->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!--引入boootBox-->
+    <script src="https://cdn.bootcss.com/bootbox.js/4.4.0/bootbox.js"></script>
+
+
+
+</head>
+
+<body>
+    <form action="#">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="text" class="form-control" id="name" placeholder="用户名">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="pass" placeholder="Password">
+        </div>
+
+
+    </form>
+    <button type="submit" class="btn btn-default" id="sub">Submit</button>
+    <script>
+        var host='http://localhost:8080'
+        $("#sub").click(function() {
+                    var pas = $("#pass").val();
+                    var user = $("#name").val();
+                    var loginInfo = user + "-" + pas;
+                    $.ajax({
+                        url: host + "/shiro/login",
+                        data: "loginInfo=" + loginInfo,
+                        type: "get",
+                        //加上这句话,允许浏览器向服务器跨域请求时携带cookie
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function(data) {
+                            console.log(data)
+
+
+                        },
+                        error: function(data) {
+                            alert("获取token失败");
+                        }
+                    });
+                });
+
+    </script>
+</body>
+
+</html>
