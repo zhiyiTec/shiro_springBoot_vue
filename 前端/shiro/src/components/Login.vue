@@ -116,7 +116,7 @@
     }).then((res)=>{
       var st=res.data;
       
-      
+       
         if(st.status==1){
                       _this.loginInfo="没有您这个用户";
                      }else if(st.status==2){
@@ -128,7 +128,7 @@
                      }
                  if(st.status==0){
         
-        _this.$router.push('/success?userName='+ _this.userName)
+        _this.$router.push('/success?userName='+ _this.userName+"&&permissions="+st.permissions+"&&roles="+st.roles)
     
 
       }else{

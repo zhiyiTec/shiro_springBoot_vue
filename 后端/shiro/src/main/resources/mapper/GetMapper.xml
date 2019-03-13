@@ -9,10 +9,24 @@
 		userName=#{userName}
 	</select>
     <select id="getUserRolesByName" parameterType="String"
-            resultType="com.zhiyi.shiro.model.Shiro_User_Role">
-		SELECT * FROM shiro_user_role WHERE
+            resultType="String">
+        SELECT roleName FROM shiro_user_role WHERE
 		userName=#{userName}
+
+	</select>
+    <select id="getAllROles"
+            resultType="String">
+        SELECT roleName FROM shiro_user_role
 	</select>
 
+    <select id="getPermissionByRoleName"   parameterType="String"
+            resultType="String">
+        SELECT permissionName FROM shiro_role_permission
+        where roleName=#{roleName}
+	</select>
+    <select id="getAllPermissions"
+            resultType="String">
+        SELECT permissionName FROM shiro_role_permission
 
+	</select>
 </mapper>

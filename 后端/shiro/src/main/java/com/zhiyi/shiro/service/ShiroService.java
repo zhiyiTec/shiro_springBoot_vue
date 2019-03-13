@@ -1,18 +1,25 @@
 package com.zhiyi.shiro.service;
 
+import com.zhiyi.shiro.mapper.GetMapper;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class ShiroService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    GetMapper getMapper;
+
 
     public  Map<String,Object> confirmUserService(Subject subject,String userName,String password){
         Map<String,Object> map=new HashMap<String,Object>();
@@ -21,11 +28,26 @@ public class ShiroService {
             subject.login(token);
             logger.info("登录成功");
             map.put("status",0);
-            if(subject.hasRole("admin")){
-                logger.info("该用户的角色为admin");
-                map.put("role","admin");
+            List<String>roles=getMapper.getAllROles();
+            List<String>listRoles=new LinkedList<String>();
+            for(String role:roles){
+                if(subject.hasRole(role)){
+                    listRoles.add(role);
+                }
             }
+            List<String> lpermissions=getMapper.getAllPermissions();
+            List<String>listPermissions=new LinkedList<String>();
+            for (String permission:lpermissions){
+                if(subject.isPermitted(permission)){
+                    logger.info("该用户的拥有权限---"+permission);
+                    if(!listPermissions.contains(permission)){
+                        listPermissions.add(permission);
+                    }
 
+                }
+            }
+            map.put("permissions",listPermissions);
+            map.put("roles",listRoles);
         }catch (UnknownAccountException uae){
             System.out.println("没有用户名为"+token.getPrincipal()+"的用户");
             map.put("status",1);

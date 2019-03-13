@@ -34,17 +34,18 @@ public class MyShiroRealm    extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         //先通过用户名查询角色
-
-        String userName=String.valueOf(principals.getPrimaryPrincipal());
-        List<String> roles=getMapper.getUserRolesByName(userName);
-        String sql2="select permissionName from shiro_role_permission where roleName=?";
-        List<String > permissionNames=new LinkedList<String>();
+        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+        Shiro_User user=(Shiro_User) (principals.getPrimaryPrincipal());//获取当前与系统交互的对象
+        List<String> roles=getMapper.getUserRolesByName(user.getUserName());//通过用户名获取该用户对应的角色
+        //下面用于通过角色名获取对应的权限名
+        for (String role:roles){
+            List<String> lpermissions=getMapper.getPermissionByRoleName(role);
+            info.addStringPermissions(lpermissions);
+        }
 
 
         //将查询出的结果封装在权限信息里面
-        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addRoles(roles);
-        info.addStringPermissions(permissionNames);
         return info;
     }
     /**

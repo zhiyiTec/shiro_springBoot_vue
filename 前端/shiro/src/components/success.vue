@@ -2,7 +2,7 @@
   <div>
 
     <b-card>
-      <b-media>
+      <b-media v-if="signalRole">
         <b-img
           slot="aside"
           blank
@@ -62,24 +62,19 @@ var host="http://localhost:8080/";
    data() {
      return{
        userName:this.$route.query.userName,
+       permissions:this.$route.query.permissions,
+       roles:this.$route.query.roles,
+       signalRole:false,
      }
    },
    created () {
        var _this=this;
-        this.$axios({
-    method: 'get',
-    url:host+'shiro/getRole',
-    params: {
-           userName:_this.userName
-           
-    },
-     headers:{
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    }
-    }).then((res)=>{
-      console.log(res.data)
-       
-    })
+        if(_this.roles.indexOf("admin")!=-1){
+         _this.signalRole=true
+        }else   if(_this.roles.indexOf("test")!=-1){
+         _this.signalRole=true
+        }
+     
      },
    methods:{
      
