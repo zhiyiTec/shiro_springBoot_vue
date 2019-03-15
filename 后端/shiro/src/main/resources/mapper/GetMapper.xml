@@ -29,4 +29,9 @@
         SELECT permissionName FROM shiro_role_permission
 
 	</select>
+
+    <select id="getAllUser"  resultType="com.zhiyi.shiro.model.Shiro_User">
+        SELECT * FROM shiro_user
+
+	</select>
 </mapper>

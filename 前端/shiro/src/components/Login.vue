@@ -127,8 +127,9 @@
                         _this.loginInfo="未知错误";
                      }
                  if(st.status==0){
-        
-        _this.$router.push('/success?userName='+ _this.userName+"&&permissions="+st.permissions+"&&roles="+st.roles)
+                // _this.$router.push('/personalResign')
+                  //  _this.$router.push('/test')
+        _this.$router.push('/personalResign?userName='+ _this.userName+"&&permissions="+st.permissions+"&&roles="+st.roles)
     
 
       }else{
@@ -140,6 +141,21 @@
         $("#type-text").val("");
         $("#type-password").val("");
       },
+      sendAxious:function(method,url,data,successfunction,errorfun){
+
+        this.$axios({
+    method: method,
+    url:url,
+    params:data,
+    //加上这句话,允许浏览器向服务器跨域请求时携带cookie
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+    }).then((res)=>{
+      successfunction;
+    })
+      }
     },
   }
 </script>

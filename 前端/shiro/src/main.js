@@ -13,7 +13,10 @@ import axios from 'axios'
 import VueRouter from 'vue-router'
 import Login from '@/components/Login'
 import success from './components/success.vue'
-
+import personalResign from './components/personalResign.vue'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import test from './components/test'
 
 
 Vue.config.productionTip = false
@@ -21,7 +24,8 @@ Vue.use(BootstrapVue)
 Vue.prototype.$axios = axios
 Vue.prototype.HOST = '/api'
 Vue.use(VueRouter)
-    /* eslint-disable no-new */
+Vue.use(ElementUI);
+/* eslint-disable no-new */
 
 
 
@@ -29,7 +33,9 @@ Vue.use(VueRouter)
 
 const routes = [
     { path: '/success', component: success },
-    { path: '/', component: Login }
+    { path: '/', component: Login },
+    { path: '/personalResign', component: personalResign },
+    { path: '/test', component: test }
     //前面to指定的地方 path  /1
 ]
 

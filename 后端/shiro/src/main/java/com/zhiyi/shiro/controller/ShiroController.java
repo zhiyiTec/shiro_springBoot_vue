@@ -3,6 +3,8 @@ package com.zhiyi.shiro.controller;
 import com.zhiyi.shiro.service.ShiroService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +41,7 @@ public class ShiroController {
 
         Subject subject=SecurityUtils.getSubject();//获取当前与系统交互的对象
 
-    return  shiroService.confirmUserService(subject,userName,passWord);
+        return  shiroService.confirmUserService(subject,userName,passWord,request);
     }
 
 
@@ -71,5 +73,20 @@ public class ShiroController {
             logger.info("验证失败");
         }
         return map;
+    }
+
+
+    @RequiresRoles(value={"admin","user"},logical = Logical.OR)
+    @RequestMapping("admin")
+    @ResponseBody
+    public Map<String,Object> admin(@RequestParam("userName")String userName,@RequestParam("passWord")String passWord, HttpServletResponse response, HttpServletRequest request){
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        response.setHeader("Access-Control-Allow-Credentials", "true");// 允许服务器向浏览器跨域响应时更改浏览器（客户端）的cookie
+        Map<String,Object> map=new HashMap<String,Object>();
+
+
+        Subject subject=SecurityUtils.getSubject();//获取当前与系统交互的对象
+        logger.info("这货是管理员");
+        return null;
     }
 }

@@ -11,4 +11,5 @@ public interface GetMapper {
     public List<String> getAllROles();//获取所有的角色名
     public List<String> getPermissionByRoleName(String roleName);//通过角色名名获取用户权限名
     public List<String> getAllPermissions();//获取所有的权限信息
+    public List<Shiro_User> getAllUser();//获取所有的用户列表
 }

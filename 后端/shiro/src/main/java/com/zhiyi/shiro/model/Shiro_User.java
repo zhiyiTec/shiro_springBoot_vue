@@ -5,6 +5,15 @@ public class Shiro_User {
     private String userId;
     private String password;
     private String userName;
+    private  String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Integer getId() {
         return id;

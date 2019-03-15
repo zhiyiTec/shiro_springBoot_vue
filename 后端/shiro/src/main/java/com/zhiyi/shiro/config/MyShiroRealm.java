@@ -3,10 +3,7 @@ package com.zhiyi.shiro.config;
 import com.zhiyi.shiro.mapper.GetMapper;
 import com.zhiyi.shiro.model.Shiro_User;
 import com.zhiyi.shiro.model.Shiro_User_Role;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -25,7 +22,15 @@ public class MyShiroRealm    extends AuthorizingRealm {
     @Autowired
     private GetMapper getMapper;
 
-
+    @Override
+    public String getName() {
+        return "MyShiroRealm";
+    }
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        //仅支持UsernamePasswordToken类型的Token
+        return token instanceof UsernamePasswordToken;
+    }
     /**
      * 用于获取登录成功后的角色、权限等信息
      * @param principals

@@ -1,6 +1,8 @@
 package com.zhiyi.shiro.service;
 
 import com.zhiyi.shiro.mapper.GetMapper;
+import com.zhiyi.shiro.mapper.UpdateMapper;
+import com.zhiyi.shiro.model.Shiro_User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
@@ -9,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,15 +24,23 @@ public class ShiroService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     GetMapper getMapper;
+    @Autowired
+    UpdateMapper updateMapper;
 
-
-    public  Map<String,Object> confirmUserService(Subject subject,String userName,String password){
+    public  Map<String,Object> confirmUserService(Subject subject, String userName, String password, HttpServletRequest request){
         Map<String,Object> map=new HashMap<String,Object>();
         UsernamePasswordToken token=new UsernamePasswordToken(userName,password);//由用户名和密码组成
         try{
             subject.login(token);
             logger.info("登录成功");
             map.put("status",0);
+
+            HttpSession session = request.getSession(true);
+            String tokenPass=session.getId();
+            Shiro_User user=new Shiro_User();
+            user.setUserName(userName);
+            user.setToken(tokenPass);
+            updateMapper.SaveTokenToUserByUN(user);
             List<String>roles=getMapper.getAllROles();
             List<String>listRoles=new LinkedList<String>();
             for(String role:roles){
@@ -63,4 +76,6 @@ public class ShiroService {
         }
         return  map;
     }
+
+
 }
